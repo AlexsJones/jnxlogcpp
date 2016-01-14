@@ -2,7 +2,7 @@
 *     File Name           :     /home/anon/Code/jnxlogcpp/src/logger/configuration.cpp
 *     Created By          :     anon
 *     Creation Date       :     [2016-01-14 18:15]
-*     Last Modified       :     [2016-01-14 18:24]
+*     Last Modified       :     [2016-01-14 19:51]
 *     Description         :      
 **********************************************************************************/
 
@@ -10,7 +10,7 @@
 
 using namespace jnxlogcpp;
 
-Configuration::Configuration() {
+Configuration::Configuration( initializer_list<IAppender> appender_list) { 
 
 }
 Configuration::~Configuration() {

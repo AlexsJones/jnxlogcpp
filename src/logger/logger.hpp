@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/logger.hpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 17:48]
- *     Last Modified       :     [2016-01-14 18:35]
+ *     Last Modified       :     [2016-01-14 18:43]
  *     Description         :      
  **********************************************************************************/
 

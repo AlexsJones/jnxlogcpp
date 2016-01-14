@@ -1,7 +1,9 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.1.0 FATAL_ERROR)
 set(INSTALL_PREFIX /usr)
 
 set(PROJECT_NAME "jnxlogcpp")
+
+add_definitions(-std=c++11)
 
 project(${PROJECT_NAME})
 
@@ -14,6 +16,7 @@ add_subdirectory(tests)
 
 include_directories(${PROJECT_INC_DIR}src)
 include_directories(${PROJECT_INC_DIR}src/logger)
+include_directories(${PROJECT_INC_DIR}src/appender)
 include_directories(${PROJECT_INC_DIR}tests)
 
 message("${SOURCE}")
