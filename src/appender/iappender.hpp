@@ -2,7 +2,7 @@
  *     File Name           :     src/appender/iappender.hpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 18:27]
- *     Last Modified       :     [2016-01-14 19:53]
+ *     Last Modified       :     [2016-01-14 20:36]
  *     Description         :      
  **********************************************************************************/
 
@@ -16,7 +16,6 @@ namespace jnxlogcpp {
   class IAppender {
     public:
       IAppender() {};
-      virtual ~IAppender() {};
       virtual void Emit(const stringstream &string) =0;
   };
 };

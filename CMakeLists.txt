@@ -12,12 +12,10 @@ set(HEADERS "")
 
 add_subdirectory(src/logger)
 add_subdirectory(src/appender)
-add_subdirectory(tests)
 
 include_directories(${PROJECT_INC_DIR}src)
 include_directories(${PROJECT_INC_DIR}src/logger)
 include_directories(${PROJECT_INC_DIR}src/appender)
-include_directories(${PROJECT_INC_DIR}tests)
 
 message("${SOURCE}")
 message("${HEADERS}")

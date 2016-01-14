@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/configuration.hpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 18:15]
- *     Last Modified       :     [2016-01-14 19:51]
+ *     Last Modified       :     [2016-01-14 20:04]
  *     Description         :      
  **********************************************************************************/
 
@@ -11,6 +11,7 @@
 #include "iappender.hpp"
 #include <initializer_list>
 
+using namespace jnxlogcpp;
 using namespace std;
 
 namespace jnxlogcpp {
@@ -19,7 +20,7 @@ namespace jnxlogcpp {
     public:
       Configuration( initializer_list<IAppender> appender_list); 
       ~Configuration();
+      void AddAppender(const IAppender &appender);
   };
 };
 #endif
-

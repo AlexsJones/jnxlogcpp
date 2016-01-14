@@ -1,8 +1,8 @@
 #!/bin/bash
 
-SOURCE="../src/logger/*.cpp"
+SOURCE="../src/**/*.cpp"
 #include use e.g. -I ../src
-INCLUDES="-I ../src/logger"
+INCLUDES="-I ../src/logger -I ../src/appender"
 OS=`uname`
 echo "System: $OS"
 if hash clang 4>/dev/null; then
@@ -47,7 +47,7 @@ function test_against_file()
 {
   file=$1
   echo "Compiling $file"
-  `$COMPILER $file $SOURCE $INCLUDES -o ${file:0:${#file}-4} -lstdc++ -g`
+  `$COMPILER $file $SOURCE $INCLUDES -o ${file:0:${#file}-4} -std=c++11 -lstdc++ -g`
   out=$?
   if [ ! $out -eq 0 ]; then
     echo "Compile failed!"
