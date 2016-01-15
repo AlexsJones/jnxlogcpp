@@ -2,17 +2,20 @@
  *     File Name           :     test/test_example.c
  *     Created By          :     anon
  *     Creation Date       :     [2015-12-17 13:15]
- *     Last Modified       :     [2016-01-14 20:38]
+ *     Last Modified       :     [2016-01-15 08:18]
  *     Description         :      
  **********************************************************************************/
 #include <assert.h>
 #include <iostream>
 #include "configuration.hpp"
-
+#include "fileappender.hpp"
 using namespace std;
 using namespace jnxlogcpp;
 
 void test_create_configuration(){
+
+  FileAppender f;
+  Configuration c({f});
 
 }
 

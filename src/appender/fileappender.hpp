@@ -2,18 +2,18 @@
  *     File Name           :     src/appender/fileappender.hpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 18:33]
- *     Last Modified       :     [2016-01-14 20:36]
+ *     Last Modified       :     [2016-01-15 08:20]
  *     Description         :      
  **********************************************************************************/
 
 #ifndef __FILEAPPENDER_HPP__
 #define __FILEAPPENDER_HPP__
-#include "iappender.hpp"
+#include "baseappender.hpp"
 
 using namespace jnxlogcpp;
 
 namespace jnxlogcpp {
-  class FileAppender : public IAppender {
+  class FileAppender : public BaseAppender {
     public:
       FileAppender();
       ~FileAppender();
