@@ -3,7 +3,7 @@
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 18:33]
  *     Last Modified       :     [2016-01-15 08:20]
- *     Description         :      
+ *     Description         :
  **********************************************************************************/
 
 #ifndef __FILEAPPENDER_HPP__
@@ -12,12 +12,14 @@
 
 using namespace jnxlogcpp;
 
-namespace jnxlogcpp {
-  class FileAppender : public BaseAppender {
-    public:
-      FileAppender();
-      ~FileAppender();
-      virtual void Emit(const stringstream &string);
-  };
+namespace jnxlogcpp
+{
+class FileAppender : public BaseAppender
+{
+public:
+    FileAppender();
+    ~FileAppender();
+    virtual void Emit(const stringstream& string);
+};
 };
 #endif

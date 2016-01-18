@@ -2,7 +2,7 @@
 
 SOURCE="../src/**/*.cpp"
 #include use e.g. -I ../src
-INCLUDES="-I ../src/logger -I ../src/appender"
+INCLUDES="-I ../src/logger -I ../src/appender -I ../src/utils"
 OS=`uname`
 echo "System: $OS"
 if hash clang 4>/dev/null; then

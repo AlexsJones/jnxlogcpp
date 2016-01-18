@@ -3,7 +3,7 @@
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 17:48]
  *     Last Modified       :     [2016-01-14 20:02]
- *     Description         :      
+ *     Description         :
  **********************************************************************************/
 
 #ifndef __LOGGER_HPP__
@@ -13,16 +13,21 @@
 
 using namespace jnxlogcpp;
 
-namespace jnxlogcpp{
-  class Logger {
+namespace jnxlogcpp
+{
+class Logger
+{
 
-    public:
-      Logger();
+private:
+    Configuration _configuration;
+public:
+    Logger();
 
-      Logger(const Configuration &config);
+    Logger(const Configuration& config);
 
-      ~Logger();
-  
+    ~Logger();
+
+    void Write(string s);
   };
 };
 #endif

@@ -3,17 +3,20 @@
 *     Created By          :     anon
 *     Creation Date       :     [2016-01-14 18:37]
 *     Last Modified       :     [2016-01-15 08:22]
-*     Description         :      
+*     Description         :
 **********************************************************************************/
 
 #include "fileappender.hpp"
 
-FileAppender::FileAppender(): BaseAppender("FileAppender") {
-  
-}
-FileAppender::~FileAppender() {
+FileAppender::FileAppender(): BaseAppender("FileAppender")
+{
 
 }
-void FileAppender::Emit(const stringstream &string) {
+FileAppender::~FileAppender()
+{
+
+}
+void FileAppender::Emit(const stringstream& string)
+{
 
 }

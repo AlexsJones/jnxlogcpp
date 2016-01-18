@@ -3,7 +3,7 @@
  *     Created By          :     anon
  *     Creation Date       :     [2015-12-17 13:15]
  *     Last Modified       :     [2016-01-15 08:18]
- *     Description         :      
+ *     Description         :
  **********************************************************************************/
 #include <assert.h>
 #include <iostream>
@@ -12,16 +12,18 @@
 using namespace std;
 using namespace jnxlogcpp;
 
-void test_create_configuration(){
+void test_create_configuration()
+{
 
-  FileAppender f;
-  Configuration c({f});
+    FileAppender f;
+    Configuration c( {f});
 
 }
 
-int main(int argc, char **argv) {
-  cout << "Running " << argv[0] << endl;
-  test_create_configuration();
+int main(int argc, char** argv)
+{
+    cout << "Running " << argv[0] << endl;
+    test_create_configuration();
 
-  return 0;
+    return 0;
 }
