@@ -7,6 +7,9 @@ OS=`uname`
 echo "System: $OS"
 if hash clang 4>/dev/null; then
   COMPILER=clang++-3.5
+  if hash clang++--3.5 4>/dev/null; then
+    COMPILER=clang++-3.4
+  fi
   echo "Using clang for test compiler"
 else
   if hash g++ 4>/dev/null; then
