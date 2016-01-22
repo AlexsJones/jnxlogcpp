@@ -14,6 +14,9 @@ if hash clang 4>/dev/null; then
 else
   if hash g++ 4>/dev/null; then
     COMPILER=g++-4.9
+    if hash g++-4.9 4>/dev/null; then
+      COMPILER=g++-4.8
+    fi
     echo "Using g++ for test compiler"
   else
     echo "g++ not found - Cannot compile"
