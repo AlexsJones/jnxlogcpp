@@ -14,6 +14,7 @@ before_install:
   - sudo apt-get update -qq
 
 install:
+  - sudo apt-get install gdb
   # g++4.8.1
   - if [ "$CXX" = "g++" ]; then sudo apt-get install -qq g++-4.8; fi
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8"; fi
@@ -33,4 +34,5 @@ install:
   - if [ "$CXX" == "clang++" ]; then export CXX="clang++-3.4"; fi
 script: 
   - $CXX --version
+  - ls -la
   - ./tests/run_tests
