@@ -6,11 +6,11 @@ INCLUDES="-I ../src/logger -I ../src/appender -I ../src/utils"
 OS=`uname`
 echo "System: $OS"
 if hash clang 4>/dev/null; then
-  COMPILER=clang
+  COMPILER=clang++-3.5
   echo "Using clang for test compiler"
 else
   if hash g++ 4>/dev/null; then
-    COMPILER=g++
+    COMPILER=g++-4.9
     echo "Using g++ for test compiler"
   else
     echo "g++ not found - Cannot compile"

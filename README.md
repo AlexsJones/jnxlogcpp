@@ -1,9 +1,7 @@
-Template project structure
-
-run `./scripts/complete_template_setup YOUR NAME`
 
 ##Deps
 ```
 cmake
-g++
+g++-4.9
+clang++-3.5
 ```

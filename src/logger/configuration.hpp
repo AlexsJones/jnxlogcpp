@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/configuration.hpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 18:15]
- *     Last Modified       :     [2016-01-15 08:24]
+ *     Last Modified       :     [2016-01-22 11:52]
  *     Description         :
  **********************************************************************************/
 
@@ -17,16 +17,16 @@ using namespace std;
 
 namespace jnxlogcpp
 {
-class Configuration
-{
+  class Configuration
+  {
     list<BaseAppender> _appenders;
-private:
+    private:
     void AddAppender(const BaseAppender& appender);
-public:
-    Configuration(initializer_list<BaseAppender> appender_list);
+    public:
     Configuration();
+    Configuration(initializer_list<BaseAppender> appender_list);
     ~Configuration();
     list<BaseAppender> GetAppenders();
-};
+  };
 };
 #endif

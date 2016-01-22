@@ -2,7 +2,7 @@
  *     File Name           :     test/test_example.c
  *     Created By          :     anon
  *     Creation Date       :     [2015-12-17 13:15]
- *     Last Modified       :     [2016-01-15 08:18]
+ *     Last Modified       :     [2016-01-22 11:33]
  *     Description         :
  **********************************************************************************/
 #include <assert.h>
@@ -16,7 +16,7 @@ void test_create_configuration()
 {
 
     FileAppender f;
-    Configuration c( {f});
+    Configuration c( { f } );
 
 }
 

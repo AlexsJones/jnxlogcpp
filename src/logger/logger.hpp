@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/logger.hpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 17:48]
- *     Last Modified       :     [2016-01-14 20:02]
+ *     Last Modified       :     [2016-01-22 11:50]
  *     Description         :
  **********************************************************************************/
 
@@ -15,19 +15,19 @@ using namespace jnxlogcpp;
 
 namespace jnxlogcpp
 {
-class Logger
-{
+  class Logger
+  {
 
-private:
-    Configuration _configuration;
-public:
-    Logger();
+    private:
+      Configuration _configuration;
+    public:
+      Logger();
 
-    Logger(const Configuration& config);
+      Logger(Configuration config);
 
-    ~Logger();
+      ~Logger();
 
-    void Write(string s);
+      void Write(string s);
   };
 };
 #endif
