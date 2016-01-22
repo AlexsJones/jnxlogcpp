@@ -3,38 +3,8 @@
 SOURCE="../src/**/*.cpp"
 #include use e.g. -I ../src
 INCLUDES="-I ../src/logger -I ../src/appender -I ../src/utils"
-OS=`uname`
-echo "System: $OS"
-if hash clang 4>/dev/null; then
-  COMPILER=clang++-3.5
-  if hash clang++--3.5 4>/dev/null; then
-    COMPILER=clang++-3.4
-  fi
-  echo "Using clang for test compiler"
-else
-  if hash g++ 4>/dev/null; then
-    COMPILER=g++-4.9
-    if hash g++-4.9 4>/dev/null; then
-      COMPILER=g++-4.8
-    fi
-    echo "Using g++ for test compiler"
-  else
-    echo "g++ not found - Cannot compile"
-    exit 1
-  fi
-fi
-if hash lldb 4>/dev/null; then
-  TESTCOMPILER=lldb
-  echo "Using lldb for test debugger"
-else
-  if hash gdb 4>/dev/null; then
-    TESTCOMPILER=gdb
-    echo "Using gdb for test debugger"
-  else
-    echo "gdb not found - Cannot run tests without any debugger"
-    exit 1
-  fi
-fi
+COMPILER=$CXX
+TESTCOMPILER=$TESTCOMPILER
 function echo_red()
 {
   tput setaf 1
