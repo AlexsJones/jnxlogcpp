@@ -11,7 +11,7 @@ IOAppender::~IOAppender()
 {
 
 }
-void IOAppender::Emit(const stringstream& string)
+void IOAppender::Emit(const stringstream& s)
 {
-    cout << string << endl;
+  cout << s.str() << endl;
 }

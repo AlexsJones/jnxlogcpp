@@ -2,7 +2,7 @@
  *     File Name           :     src/appender/iappender.hpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 18:27]
- *     Last Modified       :     [2016-01-14 20:36]
+ *     Last Modified       :     [2016-01-22 14:13]
  *     Description         :
  **********************************************************************************/
 
@@ -18,7 +18,7 @@ class IAppender
 {
 public:
     IAppender() {};
-    virtual void Emit(const stringstream& string) = 0;
+    virtual void Emit(const stringstream& s) = 0;
 };
 };
 

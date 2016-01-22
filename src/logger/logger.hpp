@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/logger.hpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 17:48]
- *     Last Modified       :     [2016-01-22 11:50]
+ *     Last Modified       :     [2016-01-22 15:35]
  *     Description         :
  **********************************************************************************/
 
@@ -15,11 +15,23 @@ using namespace jnxlogcpp;
 
 namespace jnxlogcpp
 {
+
+  enum LoggerState {
+    INFO,
+    DEBUG,
+    WARN,
+    ERROR
+  };
+
   class Logger
   {
 
     private:
       Configuration _configuration;
+
+      const string EnumToString(LoggerState state);
+      
+      const string CurrentDateTime();
     public:
       Logger();
 
@@ -27,7 +39,24 @@ namespace jnxlogcpp
 
       ~Logger();
 
-      void Write(string s);
+      void Write(const stringstream& ss);
+
+      void Write(LoggerState state, const char *file, 
+          const char *function, int line, string s);
   };
 };
+
+
+#define JNXLOGCPP_INIT(configuration)\
+  static jnxlogcpp::Logger logger(configuration);
+
+#define JNXLOG_INFO(val)\
+  logger.Write(INFO,__FILE__,__FUNCTION__,__LINE__,val)
+#define JNXLOG_DEBUG(val)\
+  logger.Write(DEBUG,__FILE__,__FUNCTION__,__LINE__,val)
+#define JNXLOG_WARN(val)\
+  logger.Write(WARN,__FILE__,__FUNCTION__,__LINE__,val)
+#define JNXLOG_ERROR(val)\
+  logger.Write(ERROR,__FILE__,__FUNCTION__,__LINE__,val)
+
 #endif
