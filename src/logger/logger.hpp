@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/logger.hpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 17:48]
- *     Last Modified       :     [2016-01-22 15:35]
+ *     Last Modified       :     [2016-01-22 18:44]
  *     Description         :
  **********************************************************************************/
 
@@ -32,6 +32,8 @@ namespace jnxlogcpp
       const string EnumToString(LoggerState state);
       
       const string CurrentDateTime();
+      
+      void Write(const stringstream& ss);
     public:
       Logger();
 
@@ -39,24 +41,19 @@ namespace jnxlogcpp
 
       ~Logger();
 
-      void Write(const stringstream& ss);
-
       void Write(LoggerState state, const char *file, 
-          const char *function, int line, string s);
+          const char *function, int line, const char *format, ...);
   };
 };
-
-
 #define JNXLOGCPP_INIT(configuration)\
   static jnxlogcpp::Logger logger(configuration);
 
-#define JNXLOG_INFO(val)\
-  logger.Write(INFO,__FILE__,__FUNCTION__,__LINE__,val)
-#define JNXLOG_DEBUG(val)\
-  logger.Write(DEBUG,__FILE__,__FUNCTION__,__LINE__,val)
-#define JNXLOG_WARN(val)\
-  logger.Write(WARN,__FILE__,__FUNCTION__,__LINE__,val)
-#define JNXLOG_ERROR(val)\
-  logger.Write(ERROR,__FILE__,__FUNCTION__,__LINE__,val)
-
+#define JNXLOG_INFO(FORMAT, ...)\
+  logger.Write(INFO,__FILE__,__FUNCTION__,__LINE__,FORMAT, ##__VA_ARGS__);
+#define JNXLOG_DEBUG(FORMAT, ...)\
+  logger.Write(DEBUG,__FILE__,__FUNCTION__,__LINE__,FORMAT, ##__VA_ARGS__);
+#define JNXLOG_WARN(FORMAT, ...)\
+  logger.Write(WARN,__FILE__,__FUNCTION__,__LINE__,FORMAT, ##__VA_ARGS__);
+#define JNXLOG_ERROR(FORMAT, ...)\
+  logger.Write(ERROR,__FILE__,__FUNCTION__,__LINE__,FORMAT, ##__VA_ARGS__);
 #endif

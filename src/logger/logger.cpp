@@ -2,11 +2,12 @@
  *     File Name           :     src/logger/logger.cpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 17:48]
- *     Last Modified       :     [2016-01-22 15:43]
+ *     Last Modified       :     [2016-01-22 18:16]
  *     Description         :
  **********************************************************************************/
 
 #include "logger.hpp"
+#include <stdarg.h>
 #include <iostream>
 
 using namespace std;
@@ -58,11 +59,19 @@ void Logger::Write(const stringstream& ss) {
   }
 }
 void Logger::Write(LoggerState state, const char *file, 
-    const char *function, int line, string s) {
+    const char *function, int line, const char *format, ...) {
   stringstream ss;
   ss << "[" << EnumToString(state) << "]";
   ss << "[" << CurrentDateTime() << "]";
   ss << "[" << file << ":" << function << ":" << line << "]";
-  ss << ":" << s;
+
+  char msgbuffer[2048];
+  va_list ap;
+  va_start(ap,format);
+  vsprintf(msgbuffer,format,ap);
+  va_end(ap);
+  
+  ss << msgbuffer;
+
   Write(ss);
 }
