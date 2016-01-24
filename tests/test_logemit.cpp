@@ -2,7 +2,7 @@
  *     File Name           :     test/test_example.c
  *     Created By          :     anon
  *     Creation Date       :     [2015-12-17 13:15]
- *     Last Modified       :     [2016-01-24 21:08]
+ *     Last Modified       :     [2016-01-24 21:22]
  *     Description         :
  **********************************************************************************/
 #include <assert.h>
@@ -13,8 +13,8 @@
 
 #ifndef __clang__
 #include <chrono>
-#endif
 typedef std::chrono::high_resolution_clock Clock;
+#endif
 using namespace std;
 
 
