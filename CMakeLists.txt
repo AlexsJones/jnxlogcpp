@@ -26,6 +26,7 @@ message("${HEADERS}")
 file(MAKE_DIRECTORY jnxlogcpp_headers)
 file(COPY ${HEADERS} DESTINATION jnxlogcpp_headers)
 
+find_package (Threads)
 add_library(jnxlogcpp STATIC ${SOURCE})
 add_library(jnxlogcpps SHARED ${SOURCE})
 

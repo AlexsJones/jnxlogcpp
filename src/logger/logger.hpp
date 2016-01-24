@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/logger.hpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 17:48]
- *     Last Modified       :     [2016-01-22 18:44]
+ *     Last Modified       :     [2016-01-24 20:52]
  *     Description         :
  **********************************************************************************/
 
@@ -43,6 +43,9 @@ namespace jnxlogcpp
 
       void Write(LoggerState state, const char *file, 
           const char *function, int line, const char *format, ...);
+      
+      void Write(LoggerState state, const char *file, 
+          const char *function, int line, const char *format,const char* buff);
   };
 };
 #define JNXLOGCPP_INIT(configuration)\
@@ -56,4 +59,5 @@ namespace jnxlogcpp
   logger.Write(WARN,__FILE__,__FUNCTION__,__LINE__,FORMAT, ##__VA_ARGS__);
 #define JNXLOG_ERROR(FORMAT, ...)\
   logger.Write(ERROR,__FILE__,__FUNCTION__,__LINE__,FORMAT, ##__VA_ARGS__);
+
 #endif

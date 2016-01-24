@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/logger.cpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 17:48]
- *     Last Modified       :     [2016-01-22 18:16]
+ *     Last Modified       :     [2016-01-24 20:52]
  *     Description         :
  **********************************************************************************/
 
@@ -70,7 +70,7 @@ void Logger::Write(LoggerState state, const char *file,
   va_start(ap,format);
   vsprintf(msgbuffer,format,ap);
   va_end(ap);
-  
+
   ss << msgbuffer;
 
   Write(ss);
