@@ -36,4 +36,5 @@ script:
   - $CXX --version
   - cd $CWD
   - ls -la
+  - cmake .
   - ./tests/run_tests
