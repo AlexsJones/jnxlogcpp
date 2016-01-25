@@ -36,5 +36,5 @@ script:
   - $CXX --version
   - cd $CWD
   - ls -la
-  - cmake .
+  - cd jnxlibc && cmake . && make && sudo make install && cd ../
   - ./tests/run_tests
