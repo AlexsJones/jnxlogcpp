@@ -23,7 +23,8 @@ function test_against_file()
 {
   file=$1
   echo "Compiling $file"
-  `$COMPILER $file $SOURCE $INCLUDES -o ${file:0:${#file}-4} -std=c++11 -lstdc++ -g -Wno-variadic-macros -ljnxc -pthread`
+  `$COMPILER $file $SOURCE $INCLUDES -o ${file:0:${#file}-4} -std=gnu++11 -lstdc++ -g -Wno-variadic-macros -ljnxc -pthread`
+  echo "$COMPILER $file $SOURCE $INCLUDES -o ${file:0:${#file}-4} -std=gnu++11 -lstdc++ -g -Wno-variadic-macros -ljnxc -pthread"
   out=$?
   if [ ! $out -eq 0 ]; then
     echo "Compile failed!"

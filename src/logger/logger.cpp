@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/logger.cpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 17:48]
- *     Last Modified       :     [2016-01-25 10:30]
+ *     Last Modified       :     [2016-01-25 18:10]
  *     Description         :
  **********************************************************************************/
 
@@ -11,10 +11,19 @@
 #include <iostream>
 #include <jnxc_headers/jnxtypes.h>
 #include <jnxc_headers/jnxfile.h>
+#include <jnxc_headers/jnx_ipc_socket.h>
+#include <netdb.h>
+#include <stdio.h>
+#include <string.h>
+#include <errno.h>
+#include <stdlib.h>
+#include <unistd.h>
+
 using namespace std;
 using namespace jnxlogcpp;
 
-Logger::Logger(Configuration config):_configuration(config)
+#define MAXBUFFER 1024
+Logger::Logger(Configuration config):_configuration(config), b_shutdown(false)
 {
 
   jnx_char *socketPath = (jnx_char*)_configuration.IpcSocketPath.c_str();
@@ -25,15 +34,26 @@ Logger::Logger(Configuration config):_configuration(config)
 
   jnx_ipc_socket *socket = jnx_socket_ipc_create(socketPath);
 
+  ipc_writer = jnx_socket_ipc_create(socketPath);
+
   ipc_listener = jnx_socket_ipc_listener_create(socket,100);
 
-  StartAsyncListener();
 }
 Logger::~Logger(void)
 {
+
+  if(!b_shutdown) {
+    Shutdown();
+  }
+
+  if(ipc_writer != NULL) {
+    jnx_ipc_socket_destroy(&ipc_writer);
+  }
   if(ipc_listener != NULL) {
     jnx_socket_ipc_listener_destroy(&ipc_listener);
   }
+  
+
 };
 const string Logger::EnumToString(LoggerState state) {
 
@@ -63,10 +83,8 @@ const string Logger::CurrentDateTime() {
 }
 
 void Logger::Write(const stringstream& ss) {
+  jnx_socket_ipc_send(ipc_writer,(jnx_uint8*)ss.str().c_str(),ss.str().size());
 
-  for(auto *appender : _configuration.GetAppenders()) {
-    appender->Emit(ss);
-  }
 }
 void Logger::Write(LoggerState state, const char *file, 
     const char *function, int line, const char *format, ...) {
@@ -85,7 +103,93 @@ void Logger::Write(LoggerState state, const char *file,
 
   Write(ss);
 }
+void Logger::ListenerCallback(const jnx_uint8 *payload, jnx_size br, int c) {
+
+
+  char *p = strdup((char*)payload);
+  for(auto *appender : _configuration.GetAppenders()) {
+
+     stringstream ss;
+     
+     ss << p;
+     appender->Emit(ss);
+  }
+  free(p);
+}
+void Logger::Shutdown(void) {
+  b_shutdown = true;
+}
 void Logger::MainLoop(void) {
 
-  cout << "Mainloop hit" << endl;
+  while(b_shutdown != true) {
+
+    jnx_ipc_listener *listener = ipc_listener;
+    jnx_int rv = poll(listener->ufds,listener->nfds,listener->poll_timeout);
+    if (rv == -1) {
+      perror("jnx IPC socket poll"); // error occurred in poll()
+    } else if (rv == 0) {
+      /* Timeout reached */
+    }
+    jnx_int i, current_size = listener->nfds;
+    jnx_int close_conn = 0, compress_array = 0;
+    for(i=0;i<current_size;++i) {
+      if(listener->ufds[i].revents == 0) {
+        continue;
+      }
+      if(listener->ufds[i].fd == listener->socket->socket) {
+        int new_fd = -1;
+        do{
+          new_fd = accept(listener->socket->socket,NULL,NULL);
+          if(new_fd < 0) {
+            if(errno != EWOULDBLOCK) {
+              JNXFAIL("jnx IPC socket could not accept");
+              exit(0);
+            }
+            break;
+          }
+          listener->ufds[listener->nfds].fd = new_fd;
+          listener->ufds[listener->nfds].events = POLLIN;
+          listener->nfds++;
+        }while(new_fd != -1);
+      }else {
+        jnx_size rc = 0;
+        close_conn = 0;
+        compress_array = 0;
+        char buffer[MAXBUFFER];
+        bzero(buffer,MAXBUFFER);
+        rc = recv(listener->ufds[i].fd,buffer,MAXBUFFER,0);
+        if(rc < 0) {
+          if(errno != EWOULDBLOCK){
+            perror("jnx IPC socket recv() failed");
+            close_conn = 1;   
+          }
+        }
+        if(rc == 0) {
+          close_conn = 1;
+        }
+        if(rc > 0) {
+          jnx_uint8 *outbuffer = (jnx_uint8*)malloc((rc + 1) * sizeof(jnx_uint8));
+          memset(outbuffer,0,rc + 1);
+          memcpy(outbuffer,buffer,rc);
+          ListenerCallback(outbuffer,rc,listener->ufds[i].fd);
+          free(outbuffer);
+        }
+        if(close_conn) {
+          close(listener->ufds[i].fd);
+          listener->ufds[i].fd = -1;
+          compress_array = 1;
+        }
+        if(compress_array) {
+          compress_array = 0;
+          jnx_int j;
+          for(j=i;j<listener->nfds;++j) {
+            if(j+1 < listener->nfds) {
+              listener->ufds[j] = listener->ufds[j+1];
+            } 
+          }
+          listener->nfds--;
+        }
+      }
+    }
+  }
 }
