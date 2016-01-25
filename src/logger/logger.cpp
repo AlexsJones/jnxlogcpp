@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/logger.cpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 17:48]
- *     Last Modified       :     [2016-01-25 09:04]
+ *     Last Modified       :     [2016-01-25 10:30]
  *     Description         :
  **********************************************************************************/
 
@@ -20,12 +20,14 @@ Logger::Logger(Configuration config):_configuration(config)
   jnx_char *socketPath = (jnx_char*)_configuration.IpcSocketPath.c_str();
 
   if(jnx_file_exists(socketPath)) {
-   jnx_file_recursive_delete(socketPath,1); 
+    jnx_file_recursive_delete(socketPath,1); 
   }
 
   jnx_ipc_socket *socket = jnx_socket_ipc_create(socketPath);
 
   ipc_listener = jnx_socket_ipc_listener_create(socket,100);
+
+  StartAsyncListener();
 }
 Logger::~Logger(void)
 {
@@ -82,4 +84,8 @@ void Logger::Write(LoggerState state, const char *file,
   ss << msgbuffer;
 
   Write(ss);
+}
+void Logger::MainLoop(void) {
+
+  cout << "Mainloop hit" << endl;
 }

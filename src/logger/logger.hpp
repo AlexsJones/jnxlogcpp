@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/logger.hpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 17:48]
- *     Last Modified       :     [2016-01-25 09:02]
+ *     Last Modified       :     [2016-01-25 10:29]
  *     Description         :
  **********************************************************************************/
 
@@ -11,6 +11,7 @@
 #include "configuration.hpp"
 #include "iappender.hpp"
 #include <jnxc_headers/jnx_ipc_socket.h>
+#include <thread>
 
 using namespace jnxlogcpp;
 
@@ -28,15 +29,15 @@ namespace jnxlogcpp
   {
 
     private:
-    
+
       jnx_ipc_listener *ipc_listener;
-      
+
       Configuration _configuration;
 
       const string EnumToString(LoggerState state);
-      
-      const string CurrentDateTime();
-      
+
+      const string CurrentDateTime(void);
+
       void Write(const stringstream& ss);
     public:
       Logger(Configuration config);
@@ -45,9 +46,15 @@ namespace jnxlogcpp
 
       void Write(LoggerState state, const char *file, 
           const char *function, int line, const char *format, ...);
-      
+
       void Write(LoggerState state, const char *file, 
           const char *function, int line, const char *format,const char* buff);
+
+      void MainLoop(void);
+  
+      thread StartAsyncListener() {
+        return thread([this] { this->MainLoop(); });
+      };
   };
 };
 #define JNXLOGCPP_INIT(configuration)\

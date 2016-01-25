@@ -30,6 +30,7 @@ include_directories(${PROJECT_INC_DIR}src/utils)
 message("${SOURCE}")
 message("${HEADERS}")
 
+find_package (Threads)
 file(MAKE_DIRECTORY jnxlogcpp_headers)
 file(COPY ${HEADERS} DESTINATION jnxlogcpp_headers)
 
@@ -37,8 +38,8 @@ find_package (Threads)
 add_library(jnxlogcpp STATIC ${SOURCE})
 add_library(jnxlogcpps SHARED ${SOURCE})
 
-target_link_libraries(jnxlogcpp ${LINKER_LIBRARIES} -ljnxcs)
-target_link_libraries(jnxlogcpps ${LINKER_LIBRARIES} -ljnxcs)
+target_link_libraries(jnxlogcpp ${LINKER_LIBRARIES} -ljnxcs ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(jnxlogcpps ${LINKER_LIBRARIES} -ljnxcs ${CMAKE_THREAD_LIBS_INIT})
 
 install(TARGETS jnxlogcpp DESTINATION ${INSTALL_PREFIX}/lib)
 install(TARGETS jnxlogcpps DESTINATION ${INSTALL_PREFIX}/lib)
