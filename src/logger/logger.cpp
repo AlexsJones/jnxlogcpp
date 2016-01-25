@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/logger.cpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 17:48]
- *     Last Modified       :     [2016-01-25 19:36]
+ *     Last Modified       :     [2016-01-25 19:43]
  *     Description         :
  **********************************************************************************/
 
@@ -102,9 +102,7 @@ void Logger::Write(LoggerState state, const char *file,
   va_start(ap,format);
   vsprintf(msgbuffer,format,ap);
   va_end(ap);
-
   ss << msgbuffer;
-
   Write(ss);
 }
 void Logger::ListenerCallback(const jnx_uint8 *payload, jnx_size br, int c) {
