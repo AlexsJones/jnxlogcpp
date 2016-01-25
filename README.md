@@ -1,8 +1,5 @@
 jnxlogcpp
 ========
-[![Build Status](https://travis-ci.org/AlexsJones/jnxlogcpp.svg?branch=master)](https://travis-ci.org/AlexsJones/jnxlogcpp)
-
-
 
 ##Deps
 ```
