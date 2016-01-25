@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/configuration.hpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 18:15]
- *     Last Modified       :     [2016-01-22 14:18]
+ *     Last Modified       :     [2016-01-25 08:25]
  *     Description         :
  **********************************************************************************/
 
@@ -24,9 +24,16 @@ namespace jnxlogcpp
     void AddAppender(BaseAppender* appender);
     public:
     Configuration();
+    
     Configuration(initializer_list<BaseAppender*> appender_list);
+    
     ~Configuration();
+    
     list<BaseAppender*> GetAppenders();
+    
+    string IpcSocketPath;
+
+    int MaxConnections;
   };
 };
 #endif

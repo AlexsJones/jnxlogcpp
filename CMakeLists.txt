@@ -3,10 +3,17 @@ set(INSTALL_PREFIX /usr)
 
 set(PROJECT_NAME "jnxlogcpp")
 
+execute_process(COMMAND git submodule init)
+execute_process(COMMAND git submodule update)
+execute_process(COMMAND cmake . WORKING_DIRECTORY jnxlibc)
+execute_process(COMMAND make . WORKING_DIRECTORY jnxlibc)
+execute_process(COMMAND sudo make install . WORKING_DIRECTORY jnxlibc)
+
 add_definitions(-std=c++11)
 
 project(${PROJECT_NAME})
 
+set(LINKER_LIBRARIES "")
 set(SOURCE "")
 set(HEADERS "")
 
@@ -30,8 +37,8 @@ find_package (Threads)
 add_library(jnxlogcpp STATIC ${SOURCE})
 add_library(jnxlogcpps SHARED ${SOURCE})
 
-target_link_libraries(jnxlogcpp ${LINKER_LIBRARIES})
-target_link_libraries(jnxlogcpps ${LINKER_LIBRARIES})
+target_link_libraries(jnxlogcpp ${LINKER_LIBRARIES} -ljnxcs)
+target_link_libraries(jnxlogcpps ${LINKER_LIBRARIES} -ljnxcs)
 
 install(TARGETS jnxlogcpp DESTINATION ${INSTALL_PREFIX}/lib)
 install(TARGETS jnxlogcpps DESTINATION ${INSTALL_PREFIX}/lib)

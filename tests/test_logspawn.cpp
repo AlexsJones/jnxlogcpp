@@ -2,7 +2,7 @@
  *     File Name           :     test/test_example.c
  *     Created By          :     anon
  *     Creation Date       :     [2015-12-17 13:15]
- *     Last Modified       :     [2016-01-22 15:28]
+ *     Last Modified       :     [2016-01-25 09:02]
  *     Description         :
  **********************************************************************************/
 #include <assert.h>
@@ -13,13 +13,6 @@ using namespace std;
 using namespace jnxlogcpp;
 
 
-void test_create_logger()
-{
-
-    Logger l;
-
-    assert(&l != NULL);
-}
 void test_create_logger_configuration()
 {
 
@@ -27,19 +20,10 @@ void test_create_logger_configuration()
     Logger l(c);
 }
 
-static IOAppender a;
-static Configuration c({&a});
-JNXLOGCPP_INIT(c);
-
-void test_global_logger() {
-
-  JNXLOG_DEBUG("Global logger");
-}
 int main(int argc, char** argv)
 {
     cout << "Running " << argv[0] << endl;
-    test_create_logger();
+    test_create_logger_configuration();
 
-    test_global_logger();
     return 0;
 }
