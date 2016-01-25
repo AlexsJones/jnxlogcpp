@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/logger.cpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 17:48]
- *     Last Modified       :     [2016-01-25 18:10]
+ *     Last Modified       :     [2016-01-25 19:36]
  *     Description         :
  **********************************************************************************/
 
@@ -41,6 +41,9 @@ Logger::Logger(Configuration config):_configuration(config), b_shutdown(false)
 }
 Logger::~Logger(void)
 {
+#if DEBUG
+  cout << "Shutting down logger" << endl;
+#endif
 
   if(!b_shutdown) {
     Shutdown();
@@ -52,7 +55,7 @@ Logger::~Logger(void)
   if(ipc_listener != NULL) {
     jnx_socket_ipc_listener_destroy(&ipc_listener);
   }
-  
+
 
 };
 const string Logger::EnumToString(LoggerState state) {
@@ -83,8 +86,9 @@ const string Logger::CurrentDateTime() {
 }
 
 void Logger::Write(const stringstream& ss) {
-  jnx_socket_ipc_send(ipc_writer,(jnx_uint8*)ss.str().c_str(),ss.str().size());
-
+  if(ipc_writer != NULL) {
+    jnx_socket_ipc_send(ipc_writer,(jnx_uint8*)ss.str().c_str(),ss.str().size());
+  }
 }
 void Logger::Write(LoggerState state, const char *file, 
     const char *function, int line, const char *format, ...) {
@@ -109,21 +113,30 @@ void Logger::ListenerCallback(const jnx_uint8 *payload, jnx_size br, int c) {
   char *p = strdup((char*)payload);
   for(auto *appender : _configuration.GetAppenders()) {
 
-     stringstream ss;
-     
-     ss << p;
-     appender->Emit(ss);
+    stringstream ss;
+
+    ss << p;
+    appender->Emit(ss);
   }
   free(p);
 }
 void Logger::Shutdown(void) {
   b_shutdown = true;
+  if(listener_thread){
+    listener_thread->join();
+    listener_thread = NULL;
+  }
 }
 void Logger::MainLoop(void) {
 
+  jnx_ipc_listener *listener = ipc_listener;
   while(b_shutdown != true) {
-
-    jnx_ipc_listener *listener = ipc_listener;
+    if(listener == NULL) {
+#if DEBUG
+      cout << "Listener is null, avoiding" << endl;
+#endif
+      return;
+    }
     jnx_int rv = poll(listener->ufds,listener->nfds,listener->poll_timeout);
     if (rv == -1) {
       perror("jnx IPC socket poll"); // error occurred in poll()

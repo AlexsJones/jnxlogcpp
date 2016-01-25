@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/logger.hpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 17:48]
- *     Last Modified       :     [2016-01-25 18:01]
+ *     Last Modified       :     [2016-01-25 19:34]
  *     Description         :
  **********************************************************************************/
 
@@ -29,7 +29,9 @@ namespace jnxlogcpp
   {
 
     private:
-  
+
+      thread *listener_thread = NULL;
+
       volatile bool b_shutdown;
 
       volatile bool b_is_running;
@@ -62,8 +64,8 @@ namespace jnxlogcpp
  
       void Shutdown(void);
 
-      thread StartAsyncListener() {
-        return thread([this] { this->MainLoop(); });
+      void StartAsyncListener() {
+        listener_thread =  new thread([this] { this->MainLoop(); });
       };
   };
 };
