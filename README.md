@@ -1,7 +1,7 @@
 jnxlogcpp
 ========
 
-A fast multi-appender logger in C++.
+A fast async multi-appender logger in C++ that uses unix interprocess comms.
 
 ##Usage
 
