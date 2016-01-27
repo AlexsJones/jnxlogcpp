@@ -14,6 +14,11 @@ Once the logger has been initialized (see example) use like so:
 
 `JNXLOG_INF0("Some sort of data with formatting %d %zu\n",1,391);`
 
+##Platforms
+
+Currently tested on `Debian/Ubuntu` both require installed build libraries for clang/gcc.
+It should work on OS/X with `brew` for library support.
+
 ##Installation
 
 ```bash
