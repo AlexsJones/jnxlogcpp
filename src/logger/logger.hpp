@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/logger.hpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 17:48]
- *     Last Modified       :     [2016-01-27 17:58]
+ *     Last Modified       :     [2016-01-27 18:07]
  *     Description         :
  **********************************************************************************/
 
@@ -79,11 +79,6 @@ namespace jnxlogcpp
 #define JNXLOGCPP_IOAPPENDER\
   new IOAppender()
 
-#define JNXLOGCPP_CONFIGURATION_BEGIN\
-  Configuration c({
-
-#define JNXLOGCPP_CONFIGURATION_END\
-      });
 #define JNXLOG_INFO(FORMAT, ...)\
   logger.Write(INFO,__FILE__,__FUNCTION__,__LINE__,FORMAT, ##__VA_ARGS__);
 #define JNXLOG_DEBUG(FORMAT, ...)\
@@ -99,4 +94,11 @@ namespace jnxlogcpp
 #include <jnxlogcpp_headers/fileappender.hpp>
 #include <jnxlogcpp_headers/ioappender.hpp>
 #include <iostream>
+
+#define JNXLOGCPP_CONFIGURATION_BEGIN\
+  JNXLOGCPP_HEADERS\
+  Configuration c({
+
+#define JNXLOGCPP_CONFIGURATION_END\
+      });
 #endif
