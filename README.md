@@ -11,8 +11,10 @@ Once the logger has been initialized (see example) use like so:
 
 ##Installation
 
-`git clone https://git@github.com/AlexsJones/jnxlogcpp.git`
-`cd jnxlogcpp && cmake . && make && sudo make install`
+```bash
+git clone https://git@github.com/AlexsJones/jnxlogcpp.git
+cd jnxlogcpp && cmake . && make && sudo make install
+```
 
 ###A note on compilers
 
