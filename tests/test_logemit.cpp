@@ -2,12 +2,13 @@
  *     File Name           :     test/test_example.c
  *     Created By          :     anon
  *     Creation Date       :     [2015-12-17 13:15]
- *     Last Modified       :     [2016-01-25 19:35]
+ *     Last Modified       :     [2016-01-27 12:07]
  *     Description         :
  **********************************************************************************/
 #include <assert.h>
 #include <iostream>
 #include "ioappender.hpp"
+#include "fileappender.hpp"
 #include "configuration.hpp"
 #include "logger.hpp"
 using namespace std;
@@ -16,7 +17,13 @@ void test_log_emit_sync()
 {
   IOAppender appender;
 
-  Configuration c( { &appender } );
+  FileAppender fappender;
+
+  AppenderInfo appenderinfo;
+  
+  appenderinfo.LogPath = "temp.log";
+
+  Configuration c( { &appender, &fappender }, appenderinfo );
 
   Logger l(c);
 

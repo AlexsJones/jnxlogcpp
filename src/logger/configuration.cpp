@@ -2,7 +2,7 @@
  *     File Name           :     /home/anon/Code/jnxlogcpp/src/logger/configuration.cpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 18:15]
- *     Last Modified       :     [2016-01-25 08:27]
+ *     Last Modified       :     [2016-01-27 11:58]
  *     Description         :
  **********************************************************************************/
 
@@ -13,9 +13,7 @@
 using namespace jnxlogcpp;
 using namespace std;
 
-Configuration::Configuration(initializer_list<BaseAppender*> appender_list):
-IpcSocketPath(".jnxlogcpp-tmp"),MaxConnections(100){
-
+void Configuration::SetupAppenders(initializer_list<BaseAppender*> appender_list) {
 #ifndef RELEASE
   cout << "initializer_list length:" << appender_list.size() << endl;
 #endif
@@ -25,16 +23,29 @@ IpcSocketPath(".jnxlogcpp-tmp"),MaxConnections(100){
 #ifndef RELEASE
     cout << "Adding: " << (*it)->Name << endl;
 #endif
+
+    (*it)->AddAppenderInfo(_appenderInfo);
+
     AddAppender(*it);
   }
 }
+Configuration::Configuration(initializer_list<BaseAppender*> appender_list):
+  IpcSocketPath(".jnxlogcpp-tmp"),MaxConnections(100) {
+
+    SetupAppenders(appender_list);
+  }
+Configuration::Configuration(initializer_list<BaseAppender*> appender_list, AppenderInfo 
+    appenderinfo): IpcSocketPath(".jnxlogcpp-tmp"),MaxConnections(100),
+  _appenderInfo(appenderinfo) {
+
+    SetupAppenders(appender_list);
+  }
 Configuration::Configuration():IpcSocketPath(".jnxlogcpp-tmp"),
   MaxConnections(100) {
-
-}
+ 
+  }
 Configuration::~Configuration()
 {
-
 }
 void Configuration::AddAppender(BaseAppender* appender)
 {

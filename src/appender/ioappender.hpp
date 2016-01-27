@@ -4,10 +4,16 @@
 
 class IOAppender : public BaseAppender
 {
-public:
+  public:
     IOAppender();
+
     ~IOAppender();
+
     virtual void Emit(const stringstream& string);
+
+    virtual void AddAppenderInfo(const AppenderInfo appender);
+  private:
+    AppenderInfo _appenderInfo;
 };
 
 #endif // IOAPPENDER_H

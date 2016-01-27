@@ -2,7 +2,7 @@
  *     File Name           :     src/appender/baseappender.hpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-15 08:13]
- *     Last Modified       :     [2016-01-22 14:06]
+ *     Last Modified       :     [2016-01-27 09:01]
  *     Description         :
  **********************************************************************************/
 
@@ -14,14 +14,18 @@ using namespace jnxlogcpp;
 
 namespace jnxlogcpp
 {
-class BaseAppender : public IAppender
-{
-public:
-    BaseAppender(string name);
-    ~BaseAppender();
-    virtual void Emit(const stringstream& s);
+  class BaseAppender : public IAppender
+  {
+    public:
+      BaseAppender(string name);
 
-    const string Name;
-};
+      ~BaseAppender();
+
+      virtual void Emit(const stringstream& s);
+
+      virtual void AddAppenderInfo(const AppenderInfo appender);
+      
+      const string Name;
+  };
 };
 #endif
