@@ -15,3 +15,26 @@ cmake
 g++-4.9
 clang++-3.5
 ```
+
+##Example
+```
+#include <jnxlogcpp_headers/logger.hpp>
+//Shorthand for loading in our appender headers
+JNXLOGCPP_HEADERS
+//Create appenders
+static IOAppender o;
+//FileAppender is an example of a constructor that takes params
+static FileAppender f("temp.log");
+//Load these into the configuration list
+Configuration c({&o, &f});
+//Init the logger and away you go!
+//No De-init required
+JNXLOGCPP_INIT(c)
+  int main(int argc, char **argv){
+
+    for(int x = 0; x < 100; ++x){
+      JNXLOG_INFO("Hello from the logger\n");
+    }
+    return 0;
+  }
+```
