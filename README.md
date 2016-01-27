@@ -31,18 +31,16 @@ clang++-3.5
 
 ```cpp
 #include <jnxlogcpp_headers/logger.hpp>
-//Shorthand for loading in our appender headers ( Only required once on init! )
-JNXLOGCPP_HEADERS
-//Create appenders
+
+//One time configuratoin
 JNXLOGCPP_CONFIGURATION_BEGIN
-//FileAppender is an example of a constructor that takes params
 JNXLOGCPP_FILEAPPENDER("temp.log"),
 JNXLOGCPP_IOAPPENDER
 JNXLOGCPP_CONFIGURATION_END
-
 //Init the logger and away you go!
 JNXLOGCPP_INIT(c)
-  int main(int argc, char **argv){
+
+int main(int argc, char **argv){
 
    for(int x = 0; x < 100; ++x){
       JNXLOG_INFO("Hello from the logger\n");
