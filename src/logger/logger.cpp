@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/logger.cpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 17:48]
- *     Last Modified       :     [2016-01-25 19:43]
+ *     Last Modified       :     [2016-01-27 13:49]
  *     Description         :
  **********************************************************************************/
 
@@ -38,6 +38,7 @@ Logger::Logger(Configuration config):_configuration(config), b_shutdown(false)
 
   ipc_listener = jnx_socket_ipc_listener_create(socket,100);
 
+  StartAsyncListener();
 }
 Logger::~Logger(void)
 {

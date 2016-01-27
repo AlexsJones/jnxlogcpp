@@ -2,7 +2,7 @@
  *     File Name           :     test/test_example.c
  *     Created By          :     anon
  *     Creation Date       :     [2015-12-17 13:15]
- *     Last Modified       :     [2016-01-27 13:05]
+ *     Last Modified       :     [2016-01-27 13:49]
  *     Description         :
  **********************************************************************************/
 #include <assert.h>
@@ -26,8 +26,6 @@ void test_log_emit_sync()
   Configuration c( { &appender, &fappender }, appenderinfo );
 
   Logger l(c);
-
-  l.StartAsyncListener();
 
   cout << "Starting write..." << endl;
   for(int x = 0; x < 100; ++x) {

@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/logger.hpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 17:48]
- *     Last Modified       :     [2016-01-27 13:34]
+ *     Last Modified       :     [2016-01-27 13:48]
  *     Description         :
  **********************************************************************************/
 
@@ -71,7 +71,6 @@ namespace jnxlogcpp
 };
 #define JNXLOGCPP_INIT(configuration)\
   static jnxlogcpp::Logger logger(configuration);\
-  logger.StartAsyncListener();
 
 #define JNXLOG_INFO(FORMAT, ...)\
   logger.Write(INFO,__FILE__,__FUNCTION__,__LINE__,FORMAT, ##__VA_ARGS__);
