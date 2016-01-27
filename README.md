@@ -38,3 +38,10 @@ JNXLOGCPP_INIT(c)
     return 0;
   }
 ```
+Output for both the temp file and console should be:
+```
+[INFO][2016-01-27.14:51:41][main.cpp:main:21]Hello from the logger
+[INFO][2016-01-27.14:51:41][main.cpp:main:21]Hello from the logger
+[INFO][2016-01-27.14:51:41][main.cpp:main:21]Hello from the logger
+[INFO][2016-01-27.14:51:41][main.cpp:main:21]Hello from the logger
+```
