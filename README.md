@@ -17,7 +17,7 @@ clang++-3.5
 ```
 
 ##Example
-```
+```cpp
 #include <jnxlogcpp_headers/logger.hpp>
 //Shorthand for loading in our appender headers
 JNXLOGCPP_HEADERS
