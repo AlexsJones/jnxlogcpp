@@ -3,6 +3,10 @@ jnxlogcpp
 
 A fast async multi-appender logger in C++ that uses unix interprocess comms.
 
+- No memory management required.
+- Supports system types.
+- Asynchronous logging and multi-thread friendly.
+
 ##Usage
 
 Once the logger has been initialized (see example) use like so:
@@ -31,13 +35,10 @@ clang++-3.5
 
 ```cpp
 #include <jnxlogcpp_headers/logger.hpp>
-
-//One time configuratoin
 JNXLOGCPP_CONFIGURATION_BEGIN
 JNXLOGCPP_FILEAPPENDER("temp.log"),
 JNXLOGCPP_IOAPPENDER
 JNXLOGCPP_CONFIGURATION_END
-//Init the logger and away you go!
 JNXLOGCPP_INIT(c)
 
 int main(int argc, char **argv){
