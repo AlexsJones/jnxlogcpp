@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/logger.hpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 17:48]
- *     Last Modified       :     [2016-01-25 19:34]
+ *     Last Modified       :     [2016-01-27 13:34]
  *     Description         :
  **********************************************************************************/
 
@@ -61,7 +61,7 @@ namespace jnxlogcpp
       void ListenerCallback(const jnx_uint8 *payload, jnx_size br, int c);
 
       void MainLoop(void);
- 
+
       void Shutdown(void);
 
       void StartAsyncListener() {
@@ -81,5 +81,9 @@ namespace jnxlogcpp
   logger.Write(WARN,__FILE__,__FUNCTION__,__LINE__,FORMAT, ##__VA_ARGS__);
 #define JNXLOG_ERROR(FORMAT, ...)\
   logger.Write(ERROR,__FILE__,__FUNCTION__,__LINE__,FORMAT, ##__VA_ARGS__);
+
+#define JNXLOGCPP_HEADERS 
+  #include <jnxlogcpp_headers/fileappender.hpp>
+  #include <jnxlogcpp_headers/ioappender.hpp>
 
 #endif
