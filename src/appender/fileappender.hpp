@@ -2,7 +2,7 @@
  *     File Name           :     src/appender/fileappender.hpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 18:33]
- *     Last Modified       :     [2016-01-27 09:04]
+ *     Last Modified       :     [2016-01-27 14:44]
  *     Description         :
  **********************************************************************************/
 
@@ -18,18 +18,15 @@ namespace jnxlogcpp
   {
     public:
 
-      FileAppender();
-      
+      FileAppender(string logpath);
+
       ~FileAppender();
-      
+
       virtual void Emit(const stringstream& string);
-  
-      virtual void AddAppenderInfo(const AppenderInfo appender);
 
     private:
 
-      AppenderInfo _appenderInfo;
-  
+      string _logPath; 
   };
 };
 #endif

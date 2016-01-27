@@ -2,7 +2,7 @@
  *     File Name           :     test/test_example.c
  *     Created By          :     anon
  *     Creation Date       :     [2015-12-17 13:15]
- *     Last Modified       :     [2016-01-22 14:20]
+ *     Last Modified       :     [2016-01-27 14:47]
  *     Description         :
  **********************************************************************************/
 #include <assert.h>
@@ -15,7 +15,7 @@ using namespace jnxlogcpp;
 void test_create_configuration()
 {
 
-  FileAppender f;
+  FileAppender f("temp.log");
   Configuration c( { &f } );
 
   for(auto *appender : c.GetAppenders()) {

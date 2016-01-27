@@ -2,7 +2,7 @@
  *     File Name           :     src/appender/baseappender.hpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-15 08:13]
- *     Last Modified       :     [2016-01-27 09:01]
+ *     Last Modified       :     [2016-01-27 14:45]
  *     Description         :
  **********************************************************************************/
 
@@ -23,8 +23,6 @@ namespace jnxlogcpp
 
       virtual void Emit(const stringstream& s);
 
-      virtual void AddAppenderInfo(const AppenderInfo appender);
-      
       const string Name;
   };
 };

@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/logger.hpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 17:48]
- *     Last Modified       :     [2016-01-27 13:48]
+ *     Last Modified       :     [2016-01-27 14:37]
  *     Description         :
  **********************************************************************************/
 
@@ -84,5 +84,5 @@ namespace jnxlogcpp
 #define JNXLOGCPP_HEADERS 
   #include <jnxlogcpp_headers/fileappender.hpp>
   #include <jnxlogcpp_headers/ioappender.hpp>
-
+  #include <iostream>
 #endif
