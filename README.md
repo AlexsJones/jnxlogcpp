@@ -31,7 +31,7 @@ clang++-3.5
 
 ```cpp
 #include <jnxlogcpp_headers/logger.hpp>
-//Shorthand for loading in our appender headers
+//Shorthand for loading in our appender headers ( Only required once on init! )
 JNXLOGCPP_HEADERS
 //Create appenders
 JNXLOGCPP_CONFIGURATION_BEGIN
