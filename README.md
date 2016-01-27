@@ -44,8 +44,14 @@ JNXLOGCPP_CONFIGURATION_END
 JNXLOGCPP_INIT(c)
   int main(int argc, char **argv){
 
-    for(int x = 0; x < 100; ++x){
+   for(int x = 0; x < 100; ++x){
       JNXLOG_INFO("Hello from the logger\n");
+      JNXLOG_DEBUG("Hello from the logger\n");
+      JNXLOG_WARN("Hello from the logger\n");
+      JNXLOG_ERROR("Hello from the logger\n");
+
+      //Halts program
+      //JNXLOG_HALT("Hello from the logger\n");
     }
     //No De-init required
     return 0;
@@ -54,9 +60,9 @@ JNXLOGCPP_INIT(c)
 Output for both the temp file and console should be:
 ```
 [INFO][2016-01-27.14:51:41][main.cpp:main:21]Hello from the logger
-[INFO][2016-01-27.14:51:41][main.cpp:main:21]Hello from the logger
-[INFO][2016-01-27.14:51:41][main.cpp:main:21]Hello from the logger
-[INFO][2016-01-27.14:51:41][main.cpp:main:21]Hello from the logger
+[DEBUG][2016-01-27.14:51:41][main.cpp:main:21]Hello from the logger
+[WARN][2016-01-27.14:51:41][main.cpp:main:21]Hello from the logger
+[ERROR][2016-01-27.14:51:41][main.cpp:main:21]Hello from the logger
 ```
 
 The makefile for this example

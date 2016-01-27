@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/logger.hpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 17:48]
- *     Last Modified       :     [2016-01-27 17:49]
+ *     Last Modified       :     [2016-01-27 17:58]
  *     Description         :
  **********************************************************************************/
 
@@ -22,7 +22,8 @@ namespace jnxlogcpp
     INFO,
     DEBUG,
     WARN,
-    ERROR
+    ERROR,
+    HALT
   };
 
   class Logger
@@ -91,7 +92,9 @@ namespace jnxlogcpp
   logger.Write(WARN,__FILE__,__FUNCTION__,__LINE__,FORMAT, ##__VA_ARGS__);
 #define JNXLOG_ERROR(FORMAT, ...)\
   logger.Write(ERROR,__FILE__,__FUNCTION__,__LINE__,FORMAT, ##__VA_ARGS__);
-
+#define JNXLOG_HALT(FORMAT, ...)\
+  logger.Write(HALT,__FILE__,__FUNCTION__,__LINE__,FORMAT, ##__VA_ARGS__);\
+  exit(1);
 #define JNXLOGCPP_HEADERS 
 #include <jnxlogcpp_headers/fileappender.hpp>
 #include <jnxlogcpp_headers/ioappender.hpp>

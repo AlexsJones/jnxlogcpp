@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/logger.cpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 17:48]
- *     Last Modified       :     [2016-01-27 17:38]
+ *     Last Modified       :     [2016-01-27 17:58]
  *     Description         :
  **********************************************************************************/
 
@@ -74,6 +74,11 @@ const string Logger::EnumToString(LoggerState state) {
     case ERROR:
       return string("ERROR");
       break;
+    case HALT:
+      return string("HALT");
+      break;
+    default:
+      return string("INFO");
   }
 }
 const string Logger::CurrentDateTime() {
