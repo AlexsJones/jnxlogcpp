@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/logger.cpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 17:48]
- *     Last Modified       :     [2016-01-27 13:49]
+ *     Last Modified       :     [2016-01-27 17:38]
  *     Description         :
  **********************************************************************************/
 
@@ -108,12 +108,9 @@ void Logger::Write(LoggerState state, const char *file,
 }
 void Logger::ListenerCallback(const jnx_uint8 *payload, jnx_size br, int c) {
 
-
   char *p = strdup((char*)payload);
   for(auto *appender : _configuration.GetAppenders()) {
-
     stringstream ss;
-
     ss << p;
     appender->Emit(ss);
   }

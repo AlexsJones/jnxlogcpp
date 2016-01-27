@@ -34,22 +34,22 @@ clang++-3.5
 //Shorthand for loading in our appender headers
 JNXLOGCPP_HEADERS
 //Create appenders
-static IOAppender o;
+JNXLOGCPP_CONFIGURATION_BEGIN
 //FileAppender is an example of a constructor that takes params
-static FileAppender f("temp.log");
-//Load these into the configuration list
-Configuration c({&o, &f});
+JNXLOGCPP_FILEAPPENDER("temp.log"),
+JNXLOGCPP_IOAPPENDER
+JNXLOGCPP_CONFIGURATION_END
+
 //Init the logger and away you go!
-//No De-init required
 JNXLOGCPP_INIT(c)
   int main(int argc, char **argv){
 
     for(int x = 0; x < 100; ++x){
       JNXLOG_INFO("Hello from the logger\n");
     }
+    //No De-init required
     return 0;
   }
-    
 ```
 Output for both the temp file and console should be:
 ```
