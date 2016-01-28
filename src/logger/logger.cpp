@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/logger.cpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 17:48]
- *     Last Modified       :     [2016-01-28 08:43]
+ *     Last Modified       :     [2016-01-28 09:01]
  *     Description         :
  **********************************************************************************/
 
@@ -18,7 +18,6 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <unistd.h>
-
 using namespace std;
 using namespace jnxlogcpp;
 
@@ -56,8 +55,6 @@ Logger::~Logger(void)
   if(ipc_listener != NULL) {
     jnx_socket_ipc_listener_destroy(&ipc_listener);
   }
-
-
 };
 const string Logger::EnumToString(LoggerState state) {
 

@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/logger.hpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 17:48]
- *     Last Modified       :     [2016-01-28 08:54]
+ *     Last Modified       :     [2016-01-28 09:02]
  *     Description         :
  **********************************************************************************/
 
@@ -13,7 +13,6 @@
 #include <jnxc_headers/jnx_ipc_socket.h>
 #include <thread>
 #include <memory>
-
 using namespace jnxlogcpp;
 
 namespace jnxlogcpp
