@@ -2,23 +2,25 @@
  *     File Name           :     test/test_example.c
  *     Created By          :     anon
  *     Creation Date       :     [2015-12-17 13:15]
- *     Last Modified       :     [2016-01-27 14:47]
+ *     Last Modified       :     [2016-01-28 08:54]
  *     Description         :
  **********************************************************************************/
 #include <assert.h>
 #include <iostream>
 #include "configuration.hpp"
 #include "fileappender.hpp"
+#include <memory>
 using namespace std;
 using namespace jnxlogcpp;
 
 void test_create_configuration()
 {
 
-  FileAppender f("temp.log");
-  Configuration c( { &f } );
+  auto f = make_shared<FileAppender>("temp.log");
 
-  for(auto *appender : c.GetAppenders()) {
+  Configuration c( { f } );
+
+  for(auto appender : c.GetAppenders()) {
     assert(appender->Name == "FileAppender");
   }
 }

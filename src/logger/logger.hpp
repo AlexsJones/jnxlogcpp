@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/logger.hpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 17:48]
- *     Last Modified       :     [2016-01-27 18:07]
+ *     Last Modified       :     [2016-01-28 08:54]
  *     Description         :
  **********************************************************************************/
 
@@ -12,6 +12,7 @@
 #include "iappender.hpp"
 #include <jnxc_headers/jnx_ipc_socket.h>
 #include <thread>
+#include <memory>
 
 using namespace jnxlogcpp;
 
@@ -74,10 +75,10 @@ namespace jnxlogcpp
   static jnxlogcpp::Logger logger(configuration);\
 
 #define JNXLOGCPP_FILEAPPENDER(X)\
-  new FileAppender(X)
+  make_shared<FileAppender>(X)
 
 #define JNXLOGCPP_IOAPPENDER\
-  new IOAppender()
+  make_shared<IOAppender>()
 
 #define JNXLOG_INFO(FORMAT, ...)\
   logger.Write(INFO,__FILE__,__FUNCTION__,__LINE__,FORMAT, ##__VA_ARGS__);

@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/configuration.hpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 18:15]
- *     Last Modified       :     [2016-01-27 14:46]
+ *     Last Modified       :     [2016-01-28 08:42]
  *     Description         :
  **********************************************************************************/
 
@@ -11,6 +11,7 @@
 #include "baseappender.hpp"
 #include <initializer_list>
 #include <list>
+#include <memory>
 
 using namespace jnxlogcpp;
 using namespace std;
@@ -21,16 +22,16 @@ namespace jnxlogcpp
   {
     private:
 
-    list<BaseAppender*> _appenders;
+    list<shared_ptr<BaseAppender>> _appenders;
 
-    void SetupAppenders(initializer_list<BaseAppender*> appender_list);
+    void SetupAppenders(initializer_list<shared_ptr<BaseAppender>> appender_list);
 
-    void AddAppender(BaseAppender* appender);
+    void AddAppender(shared_ptr<BaseAppender> appender);
     
     public:
     Configuration();
     
-    Configuration(initializer_list<BaseAppender*> appender_list);
+    Configuration(initializer_list<shared_ptr<BaseAppender>> appender_list);
     
     ~Configuration();
     
@@ -38,7 +39,7 @@ namespace jnxlogcpp
 
     int MaxConnections;
     
-    list<BaseAppender*> GetAppenders();
+    list<shared_ptr<BaseAppender>> GetAppenders();
   };
 };
 #endif
