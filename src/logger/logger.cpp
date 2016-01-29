@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/logger.cpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 17:48]
- *     Last Modified       :     [2016-01-28 09:01]
+ *     Last Modified       :     [2016-01-29 11:58]
  *     Description         :
  **********************************************************************************/
 
@@ -41,10 +41,6 @@ Logger::Logger(Configuration config):_configuration(config), b_shutdown(false)
 }
 Logger::~Logger(void)
 {
-#if DEBUG
-  cout << "Shutting down logger" << endl;
-#endif
-
   if(!b_shutdown) {
     Shutdown();
   }
@@ -120,10 +116,7 @@ void Logger::ListenerCallback(const jnx_uint8 *payload, jnx_size br, int c) {
 }
 void Logger::Shutdown(void) {
   b_shutdown = true;
-  if(listener_thread){
-    listener_thread->join();
-    listener_thread = NULL;
-  }
+  listener_thread->join();
 }
 void Logger::MainLoop(void) {
 

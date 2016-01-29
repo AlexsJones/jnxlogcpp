@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/logger.hpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 17:48]
- *     Last Modified       :     [2016-01-28 09:02]
+ *     Last Modified       :     [2016-01-29 11:57]
  *     Description         :
  **********************************************************************************/
 
@@ -12,6 +12,7 @@
 #include "iappender.hpp"
 #include <jnxc_headers/jnx_ipc_socket.h>
 #include <thread>
+#include <mutex>
 #include <memory>
 using namespace jnxlogcpp;
 
@@ -31,7 +32,9 @@ namespace jnxlogcpp
 
     private:
 
-      thread *listener_thread = NULL;
+      shared_ptr<thread> listener_thread;
+
+      shared_ptr<mutex> locker;
 
       volatile bool b_shutdown;
 
@@ -66,7 +69,7 @@ namespace jnxlogcpp
       void Shutdown(void);
 
       void StartAsyncListener() {
-        listener_thread =  new thread([this] { this->MainLoop(); });
+        listener_thread = make_shared<thread>([this] { this->MainLoop(); });
       };
   };
 };
