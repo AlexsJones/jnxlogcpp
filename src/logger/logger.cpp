@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/logger.cpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 17:48]
- *     Last Modified       :     [2016-01-31 21:36]
+ *     Last Modified       :     [2016-01-31 21:48]
  *     Description         :
  **********************************************************************************/
 
@@ -53,11 +53,15 @@ Logger::~Logger(void)
   if(!b_shutdown) {
     Shutdown();
   }
-/*
-  if(ipc_writer != NULL) {
-    jnx_ipc_socket_destroy(&ipc_writer);
+  
+  unordered_map<string,jnx_ipc_socket*>::iterator it;
+  
+  for(it = thread_writer_sockets->begin(); 
+      it != thread_writer_sockets->end(); ++it) {
+    
+    jnx_ipc_socket_destroy(&(*it).second);
   }
-  */
+
   if(ipc_listener != NULL) {
     jnx_socket_ipc_listener_destroy(&ipc_listener);
   }
@@ -85,7 +89,6 @@ const string Logger::EnumToString(LoggerState state) {
   }
 }
 const string Logger::CurrentDateTime() {
-  return "NULL";
   time_t     now = time(0);
   struct tm  tstruct;
   char       buf[80];
