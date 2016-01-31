@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/logger.cpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 17:48]
- *     Last Modified       :     [2016-01-29 11:58]
+ *     Last Modified       :     [2016-01-31 21:36]
  *     Description         :
  **********************************************************************************/
 
@@ -26,6 +26,10 @@ Logger::Logger(Configuration config):_configuration(config), b_shutdown(false)
 {
 
   jnx_char *socketPath = (jnx_char*)_configuration.IpcSocketPath.c_str();
+  
+  thread_writer_sockets = make_shared<unordered_map<string,jnx_ipc_socket*> >();
+
+  locker = make_shared<mutex>();
 
   if(jnx_file_exists(socketPath)) {
     jnx_file_recursive_delete(socketPath,1); 
@@ -33,7 +37,12 @@ Logger::Logger(Configuration config):_configuration(config), b_shutdown(false)
 
   jnx_ipc_socket *socket = jnx_socket_ipc_create(socketPath);
 
-  ipc_writer = jnx_socket_ipc_create(socketPath);
+  jnx_ipc_socket *ipc_writer = jnx_socket_ipc_create(socketPath);
+
+  stringstream ss;
+  ss << this_thread::get_id();
+  
+  thread_writer_sockets->insert(make_pair(ss.str(),ipc_writer)); 
 
   ipc_listener = jnx_socket_ipc_listener_create(socket,100);
 
@@ -44,10 +53,11 @@ Logger::~Logger(void)
   if(!b_shutdown) {
     Shutdown();
   }
-
+/*
   if(ipc_writer != NULL) {
     jnx_ipc_socket_destroy(&ipc_writer);
   }
+  */
   if(ipc_listener != NULL) {
     jnx_socket_ipc_listener_destroy(&ipc_listener);
   }
@@ -75,6 +85,7 @@ const string Logger::EnumToString(LoggerState state) {
   }
 }
 const string Logger::CurrentDateTime() {
+  return "NULL";
   time_t     now = time(0);
   struct tm  tstruct;
   char       buf[80];
@@ -85,9 +96,28 @@ const string Logger::CurrentDateTime() {
 }
 
 void Logger::Write(const stringstream& ss) {
-  if(ipc_writer != NULL) {
+
+  stringstream sa;
+  sa << this_thread::get_id();
+  
+  auto it = thread_writer_sockets->find(sa.str()); 
+
+  if(it == thread_writer_sockets->end()) {
+    lock_guard<mutex> guard(*locker);
+    jnx_char *socketPath = (jnx_char*)_configuration.IpcSocketPath.c_str();
+  
+    jnx_ipc_socket *socket = jnx_socket_ipc_create(socketPath);
+
+    jnx_ipc_socket *ipc_writer = jnx_socket_ipc_create(socketPath);
+
+    thread_writer_sockets->insert(make_pair(ss.str(),ipc_writer)); 
+    
     jnx_socket_ipc_send(ipc_writer,(jnx_uint8*)ss.str().c_str(),ss.str().size());
+    cout << "Created new socket " 
+      << socket << "for unseen thread " << this_thread::get_id() << endl;
+    return;
   }
+    jnx_socket_ipc_send(it->second,(jnx_uint8*)ss.str().c_str(),ss.str().size());
 }
 void Logger::Write(LoggerState state, const char *file, 
     const char *function, int line, const char *format, ...) {

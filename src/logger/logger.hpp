@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/logger.hpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 17:48]
- *     Last Modified       :     [2016-01-29 11:57]
+ *     Last Modified       :     [2016-01-31 16:44]
  *     Description         :
  **********************************************************************************/
 
@@ -14,6 +14,8 @@
 #include <thread>
 #include <mutex>
 #include <memory>
+#include <thread>
+#include <unordered_map>
 using namespace jnxlogcpp;
 
 namespace jnxlogcpp
@@ -40,7 +42,7 @@ namespace jnxlogcpp
 
       volatile bool b_is_running;
 
-      jnx_ipc_socket *ipc_writer;
+      shared_ptr<unordered_map<string,jnx_ipc_socket*>> thread_writer_sockets;
 
       jnx_ipc_listener *ipc_listener;
 
