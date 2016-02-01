@@ -2,7 +2,7 @@
  *     File Name           :     src/logger/logger.cpp
  *     Created By          :     anon
  *     Creation Date       :     [2016-01-14 17:48]
- *     Last Modified       :     [2016-01-31 21:48]
+ *     Last Modified       :     [2016-02-01 08:23]
  *     Description         :
  **********************************************************************************/
 
@@ -26,9 +26,7 @@ Logger::Logger(Configuration config):_configuration(config), b_shutdown(false)
 {
 
   jnx_char *socketPath = (jnx_char*)_configuration.IpcSocketPath.c_str();
-  
   thread_writer_sockets = make_shared<unordered_map<string,jnx_ipc_socket*> >();
-
   locker = make_shared<mutex>();
 
   if(jnx_file_exists(socketPath)) {
@@ -36,14 +34,12 @@ Logger::Logger(Configuration config):_configuration(config), b_shutdown(false)
   }
 
   jnx_ipc_socket *socket = jnx_socket_ipc_create(socketPath);
-
   jnx_ipc_socket *ipc_writer = jnx_socket_ipc_create(socketPath);
 
   stringstream ss;
   ss << this_thread::get_id();
   
   thread_writer_sockets->insert(make_pair(ss.str(),ipc_writer)); 
-
   ipc_listener = jnx_socket_ipc_listener_create(socket,100);
 
   StartAsyncListener();
@@ -89,12 +85,12 @@ const string Logger::EnumToString(LoggerState state) {
   }
 }
 const string Logger::CurrentDateTime() {
+  //TODO: Thread safe implementation required
   time_t     now = time(0);
   struct tm  tstruct;
   char       buf[80];
   tstruct = *localtime(&now);
   strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct);
-
   return buf;
 }
 
@@ -108,16 +104,14 @@ void Logger::Write(const stringstream& ss) {
   if(it == thread_writer_sockets->end()) {
     lock_guard<mutex> guard(*locker);
     jnx_char *socketPath = (jnx_char*)_configuration.IpcSocketPath.c_str();
-  
     jnx_ipc_socket *socket = jnx_socket_ipc_create(socketPath);
-
     jnx_ipc_socket *ipc_writer = jnx_socket_ipc_create(socketPath);
-
     thread_writer_sockets->insert(make_pair(ss.str(),ipc_writer)); 
-    
     jnx_socket_ipc_send(ipc_writer,(jnx_uint8*)ss.str().c_str(),ss.str().size());
+#if DEBUG
     cout << "Created new socket " 
       << socket << "for unseen thread " << this_thread::get_id() << endl;
+#endif
     return;
   }
     jnx_socket_ipc_send(it->second,(jnx_uint8*)ss.str().c_str(),ss.str().size());
