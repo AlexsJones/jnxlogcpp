@@ -5,7 +5,7 @@ set(PROJECT_NAME "jnxlogcpp")
 
 execute_process(COMMAND git submodule init)
 execute_process(COMMAND git submodule update)
-execute_process(COMMAND cmake . WORKING_DIRECTORY jnxlibc)
+execute_process(COMMAND cmake . -DRELEASE=OFF -DRUN_TESTS=OFF WORKING_DIRECTORY jnxlibc)
 execute_process(COMMAND make . WORKING_DIRECTORY jnxlibc)
 execute_process(COMMAND sudo make install . WORKING_DIRECTORY jnxlibc)
 
