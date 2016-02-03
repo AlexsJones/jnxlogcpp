@@ -1,6 +1,8 @@
 jnxlogcpp
 ========
 
+STATUS: Development complete (Will maintain and bug fix - maybe add some more appenders etc..)
+
 A fast async multi-appender logger in C++ that uses unix interprocess comms.
 
 - Simplicity
